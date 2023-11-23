@@ -1,10 +1,22 @@
+import 'dotenv/config';
+import 'hardhat-deploy';
+import 'hardhat-deploy-ethers';
 import {HardhatUserConfig} from 'hardhat/config';
 
 const config: HardhatUserConfig = {
+  defaultNetwork: "sepolia",
+  networks: {
+    hardhat: {
+    },
+    sepolia: {
+      url: process.env.URL,
+      accounts: [`${process.env.PRIVATE_KEY}`]
+    }
+  },
   solidity: {
     compilers: [
       {
-        version: '0.8.19',
+        version: '0.8.20',
         settings: {
           optimizer: {
             enabled: true,
@@ -13,7 +25,10 @@ const config: HardhatUserConfig = {
         },
       },
     ],
-  }
+  },
+  namedAccounts: {
+    deployer: 0,
+  },
 };
 
 export default config;
