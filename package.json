@@ -1,0 +1,11 @@
+{
+  "name": "test-task",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:rishabh0x00/test-task.git",
+  "author": "Rishabh Sharma (rsharma0x00@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "hardhat": "^2.19.1"
+  }
+}
