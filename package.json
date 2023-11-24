@@ -5,6 +5,10 @@
   "repository": "git@github.com:rishabh0x00/test-task.git",
   "author": "Rishabh Sharma (rsharma0x00@gmail.com)",
   "license": "MIT",
+  "scripts": {
+    "compile": "npx hardhat run",
+    "test": "npx hardhat test"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.2",
     "@nomicfoundation/hardhat-ethers": "^3.0.5",
