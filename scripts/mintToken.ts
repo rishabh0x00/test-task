@@ -1,9 +1,7 @@
 import {Web3} from 'web3';
 import {network, ethers} from 'hardhat';
-import {abi} from "./helper/tokenABI.json";
+import {contractAddress, contractABI} from "./helper/tokenConfig.json";
 
-// fetching contract address and amount from env, this can be modified use take values from any input
-const tokenAddress = process.env.TOKEN_ADDRESS;
 const amount = process.env.MINT_AMOUNT;
 
 async function main() {
@@ -11,22 +9,42 @@ async function main() {
     throw new Error('network should be bsc');
   }
 
-  if (tokenAddress === undefined || amount === undefined) {
-    throw new Error('contract address or amount not specified')
+  if (amount === undefined) {
+    throw new Error('amount not specified')
   }
 
-  const users = await ethers.getSigners();
+  const users = await ethers.getSigners(); // using user account to mint
   const web3 = new Web3(process.env.URL_BSC)
 
-  console.log('Minting ', amount, ' tokens for user')
-  const tokenContract = new web3.eth.Contract(abi, tokenAddress)
+  // Replace 'yourPrivateKey' with the private key of the account performing the mint operation
+  const privateKey = `${process.env.PRIVATE_KEY}`; 
+  const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+  web3.eth.accounts.wallet.add(account);
 
-  /// the caller should have a minter privileges 
-  tokenContract.methods.mint(users[0].address, amount).send({
-    from: users[0].address
-  }).catch((e) => {
-    console.log(e);
-  });
+  // Creating contract instance
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+  try {
+      const mintTx = contract.methods.mint(users[0].address, amount);
+      const gas = await mintTx.estimateGas({from: account.address});
+      const gasPrice = await web3.eth.getGasPrice();
+      const data = mintTx.encodeABI();
+      const nonce = await web3.eth.getTransactionCount(account.address);
+
+      const signedTx = await web3.eth.accounts.signTransaction({
+          to: contractAddress,
+          data,
+          gas,
+          gasPrice,
+          nonce,
+          chainId: 97 // BSC Testnet Chain ID
+      }, privateKey);
+
+      const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+      console.log(`Minted ${amount} tokens to ${users[0].address}. Transaction Hash: ${receipt.transactionHash}`);
+  } catch (error) {
+      console.error('Error minting tokens:', error);
+  }
 };
 
 main().catch((e) => console.error(e));

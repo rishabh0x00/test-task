@@ -1,6 +1,6 @@
 import {Web3} from 'web3';
 import {network, ethers} from 'hardhat';
-import {abi} from "./helper/tokenABI.json";
+import {contractAddress, contractABI} from "./helper/tokenConfig.json";
 
 // fetching contract address from env, this can be modified use take values from any input
 const tokenAddress = process.env.TOKEN_ADDRESS;
@@ -18,9 +18,11 @@ async function main() {
 
   const users = await ethers.getSigners();
   const web3 = new Web3(process.env.URL_BSC)
-  const tokenContract = new web3.eth.Contract(abi, tokenAddress)
 
-  tokenContract.methods.totalSupply().call({
+  // Creating contract instance
+  const contract = new web3.eth.Contract(contractABI, contractAddress)
+
+  contract.methods.totalSupply().call({
     from: users[0].address,
   }).then((result) => {
     console.log(result)

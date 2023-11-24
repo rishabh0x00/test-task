@@ -20,7 +20,7 @@ const config: HardhatUserConfig = {
       accounts: [`${process.env.PRIVATE_KEY}`]
     },
     bsc: {
-      chainId: 56,
+      chainId: 97,
       url: process.env.URL_BSC,
       accounts: [`${process.env.PRIVATE_KEY}`]
     },

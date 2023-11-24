@@ -1,0 +1,7 @@
+{
+  "contractAddress": "0x72de1338844d83648b2586c777af92d525c92401",
+  "contractABI": [
+    {"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},
+    {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"mint","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}
+  ]
+}
