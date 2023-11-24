@@ -61,8 +61,8 @@ contract Voting is OwnableUpgradeable {
         bytes memory hash = abi.encodePacked(_item);
         if (_proposalStatus[hash] == ProposalStatus.DEFAULT) {
             _proposalStatus[hash] = ProposalStatus.ADDED;
-            proposals.push(_item);
             _id = proposals.length;
+            proposals.push(_item);
             emit ProposalCreated(_msgSender(), _item);
         } else {
             revert('Proposal Already Exists');
@@ -74,6 +74,9 @@ contract Voting is OwnableUpgradeable {
      * @param _itemId id of the proposal 
     */
     function voteForItem(uint256 _itemId) external {
+        if (proposals.length == 0 || _itemId > proposals.length - 1){
+            revert('Invalid ProposalId');
+        }
         if (_voters.contains(_msgSender())) {
             revert('Already Voted');
         }

@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
+import '@openzeppelin/hardhat-upgrades';
 import "@nomicfoundation/hardhat-ethers";
+import '@nomicfoundation/hardhat-toolbox';
 import {HardhatUserConfig} from 'hardhat/config';
 
 const config: HardhatUserConfig = {
