@@ -2,13 +2,13 @@
 pragma solidity 0.8.20;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 
 /**
  * @title Voting contract
  * @author Rishabh Sharma
- * @notice Contract developed as a test task 
+ * @notice Voting contract developed as a test task 
  */
 contract Voting is OwnableUpgradeable {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -65,7 +65,7 @@ contract Voting is OwnableUpgradeable {
             _id = proposals.length;
             emit ProposalCreated(_msgSender(), _item);
         } else {
-            revert("Proposal Already Exists");
+            revert('Proposal Already Exists');
         }
     }
 
@@ -75,7 +75,7 @@ contract Voting is OwnableUpgradeable {
     */
     function voteForItem(uint256 _itemId) external {
         if (_voters.contains(_msgSender())) {
-            revert("Already Voted");
+            revert('Already Voted');
         }
         _voters.add(_msgSender());
         proposalToVotes[_itemId]++;

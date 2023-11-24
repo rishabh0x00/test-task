@@ -4,7 +4,7 @@ import 'hardhat-deploy-ethers';
 import {HardhatUserConfig} from 'hardhat/config';
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "sepolia",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
     },
